@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.AdminRoleMapper">
+<mapper namespace="com.example.dmall.mapper.AdminRoleMapper">
     <select id="getAdminRoleByAdmin" resultType="AdminRole">
         select * from admin_role where admin_id=#{id}
     </select>
