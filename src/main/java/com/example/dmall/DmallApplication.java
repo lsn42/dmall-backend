@@ -10,6 +10,6 @@ public class DmallApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DmallApplication.class, args);
+		System.out.println("helloworld");
 	}
-
 }
