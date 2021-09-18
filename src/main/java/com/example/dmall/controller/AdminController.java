@@ -51,4 +51,14 @@ public class AdminController {
         System.out.println(adminRoles);
         return msg.success("AdminRoles",adminRoles);
     }
+
+    @RequestMapping(value="/testReturn")
+    public Msg getAdminRole(@RequestParam(value="name") String name,
+                            @RequestParam(value="password") String password) {
+        Admin admin = new Admin();
+        admin.setName(name);
+        admin.setPassword(password);
+        admin = adminService.getAdminByNameAndPwd(admin);
+        return null;
+    }
 }

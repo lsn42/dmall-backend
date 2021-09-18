@@ -1,22 +1,22 @@
 package com.example.dmall.bean;
 
 public class AdminRole {
-    private int AdminId;
-    private int RoleId;
+    private Integer AdminId;
+    private Integer RoleId;
 
-    public int getAdminId() {
+    public Integer getAdminId() {
         return AdminId;
     }
 
-    public void setAdminId(int adminId) {
+    public void setAdminId(Integer adminId) {
         AdminId = adminId;
     }
 
-    public int getRoleId() {
+    public Integer getRoleId() {
         return RoleId;
     }
 
-    public void setRoleId(int roleId) {
+    public void setRoleId(Integer roleId) {
         RoleId = roleId;
     }
 

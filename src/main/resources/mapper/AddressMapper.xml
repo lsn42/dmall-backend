@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dmall.mapper.AddressMapper">
+    <select id="findAddressByRegionId" parameterType="Integer" resultType="Address">
+        select * from address where region_id = #{xxx}
+    </select>
+
+
+</mapper>

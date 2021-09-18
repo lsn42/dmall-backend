@@ -37,3 +37,8 @@ dmall-backend.jar
 .mvn
 mvnw
 mvnw.cmd
+
+### Static ###
+src/main/resources/static
+!src/main/resources/static/test
+!src/main/resources/static/332a6df0e6def8da77e09310a62f3bffdc397640.png

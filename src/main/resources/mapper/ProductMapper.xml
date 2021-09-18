@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dmall.mapper.ProductMapper">
+    <select id="findProducts" resultType="com.example.dmall.bean.Product">
+        select *
+        from product
+    </select>
+    <!--    按照实践创建的顺序排序，选中0-8条数据返回-->
+    <select id="findProductsByCategory" resultType="Product">
+        select product.* from product INNER JOIN third_level_category INNER JOIN second_level_category INNER  join first_level_category
+                                                 on product.category_id=third_level_category.id and third_level_category.parent_id=second_level_category.id and second_level_category.parent_id=first_level_category.id
+        where first_level_category.id=#{category_id} order by create_date desc limit 0,8
+    </select>
+    <select id="findProductSmallImage" resultType="ProductImage">
+        select * from product_image where product_id=#{productId}
+    </select>
+</mapper>
