@@ -11,4 +11,6 @@ public interface ProductService {
     List<Product> findProductsByCategory(Integer Category_id);
     List<ProductImage> findProductSmallImage(Integer product_id);
     List<FirstLevelCategory> getFirstCategory();
+    List<Product> findAllByFirstLevelCategory(Integer category_id);
+    List<Product> findAllByThirdLevelCategory(Integer category_id);
 }

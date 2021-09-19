@@ -6,4 +6,18 @@
     <select id="getFirstCategory" resultType="FirstLevelCategory">
         select * from first_level_category;
     </select>
+
+    <select id="getSecondCategoryByFirst" resultType="SecondLevelCategory">
+        select second_level_category.* from second_level_category INNER JOIN first_level_category
+                                                       on second_level_category.parent_id=first_level_category.id
+        where second_level_category.parent_id=#{id}
+    </select>
+
+    <select id="getThirdCategoryBySecond" resultType="ThirdLevelCategory">
+        select third_level_category.* from third_level_category INNER JOIN second_level_category
+                                                       on third_level_category.parent_id=second_level_category.id
+        where third_level_category.parent_id=#{id}
+    </select>
+
+
 </mapper>

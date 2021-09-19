@@ -9,9 +9,9 @@ public class Msg {
     Map<String,Object> extend = new HashMap<>();
 
     public Msg success(String key,Object value) {
-        this.code=100;
-        this.msg="处理成功";
-        this.extend.put(key, value);
+        this.setCode(100);
+        this.setMsg("处理成功");
+        this.getExtend().put(key, value);
         return this;
     }
 

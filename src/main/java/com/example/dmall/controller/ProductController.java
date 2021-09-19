@@ -5,11 +5,10 @@ import com.example.dmall.bean.Msg;
 import com.example.dmall.bean.Product;
 import com.example.dmall.bean.ProductImage;
 import com.example.dmall.service.ProductService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +69,9 @@ public class ProductController {
                 List<ProductImage> productImages=  productService.findProductSmallImage(product.getId());
                 if(productImages.size()>0)
                 {
-                    product.setSmallimage("images/item/productDetailsPicture/"+productImages.get(0).getSrc());
+//                    product.setSmallimage("images/item/productDetailsPicture/"+productImages.get(0).getSrc());
+                        //测试用
+                    product.setSmallimage(productImages.get(0).getSrc());
                 }
             }
 
@@ -82,5 +83,61 @@ public class ProductController {
         //第二步，遍历产品信息集合
 
         return  new Msg().success("floors",list);
+    }
+
+    @RequestMapping("/findAllByCategory/first/{id}")
+    public Msg findAllByFirstCategory(@RequestParam(value= "pn",defaultValue = "1") Integer pn,
+                          @PathVariable(value = "id") Integer id,
+                          @RequestParam(value = "ps",defaultValue = "20")Integer ps){
+        int pageSize = ps;
+        //在查询之前调用startPage方法，传入pn,pageSize
+        PageHelper.startPage(pn,pageSize);
+        //在startPage方法后紧跟一个查询，此查询是一个分页查询
+        List<Product> products = productService.findAllByFirstLevelCategory(id);
+        if(products==null){
+            products=new ArrayList<Product>();
+        }
+        for(Product product:products) {
+            List<ProductImage> productImages = productService.findProductSmallImage(product.getId());
+            if(productImages.size()>0){
+                product.setSmallimage(productImages.get(0).getSrc());}
+        }
+        //使用PageInfo来包装查询结果，只需将PageInfo传到前台即可,传入查询的结果和连续显示的页数
+        PageInfo page = new PageInfo(products,pageSize);
+
+        return Msg.success().success("pageInfo", page);
+    }
+
+    @RequestMapping("/findAllByCategory/third/{id}")
+    public Msg findAllByThirdLevelCategory(@RequestParam(value= "pn",defaultValue = "1") Integer pn,
+                          @PathVariable(value = "id") Integer id,
+                          @RequestParam(value = "ps",defaultValue = "20")Integer ps){
+        int pageSize = ps;
+        //在查询之前调用startPage方法，传入pn,pageSize
+        PageHelper.startPage(pn,pageSize);
+        //在startPage方法后紧跟一个查询，此查询是一个分页查询
+        List<Product> products = productService.findAllByThirdLevelCategory(id);
+        if(products==null){
+            products=new ArrayList<Product>();
+        }
+        for(Product product:products) {
+            List<ProductImage> productImages = productService.findProductSmallImage(product.getId());
+            if(productImages.size()>0){
+                product.setSmallimage(productImages.get(0).getSrc());}
+        }
+        //使用PageInfo来包装查询结果，只需将PageInfo传到前台即可,传入查询的结果和连续显示的页数
+        PageInfo page = new PageInfo(products,pageSize);
+
+        return Msg.success().success("pageInfo", page);
+    }
+
+    @RequestMapping("/images/{id}")
+    public Msg getImages(@PathVariable(value = "id") Integer id) {
+        List<ProductImage> productImages = productService.findProductSmallImage(id);
+//        for(ProductImage productImage:productImages) {
+//            productImage.setSrc("images/item/productDetailsPicture"+productImage.getSrc());
+//        }
+
+        return new Msg().success("images",productImages);
     }
 }

@@ -39,4 +39,11 @@ public class ProductServiceImpl implements ProductService {
     public List<FirstLevelCategory> getFirstCategory(){
         return productCategoryMapper.getFirstCategory();
     }
+    @Override
+    public List<Product> findAllByFirstLevelCategory(Integer category_id) {
+        return productMapper.findAllByFirstLevelCategory(category_id);
+    };
+    public List<Product> findAllByThirdLevelCategory(Integer category_id) {
+        return productMapper.findAllByThirdLevelCategory(category_id);
+    };
 }

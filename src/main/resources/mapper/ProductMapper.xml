@@ -16,4 +16,16 @@
     <select id="findProductSmallImage" resultType="ProductImage">
         select * from product_image where product_id=#{productId}
     </select>
+
+    <select id="findAllByFirstLevelCategory" resultType="Product">
+        select product.* from product INNER JOIN third_level_category INNER JOIN second_level_category INNER  join first_level_category
+                                        on product.category_id=third_level_category.id and third_level_category.parent_id=second_level_category.id and second_level_category.parent_id=first_level_category.id
+        where first_level_category.id=#{category_id} order by create_date
+    </select>
+
+    <select id="findAllByThirdLevelCategory" resultType="Product">
+        select product.* from product INNER JOIN third_level_category
+                                                on product.category_id=third_level_category.id
+        where third_level_category.id=#{category_id} order by create_date
+    </select>
 </mapper>
