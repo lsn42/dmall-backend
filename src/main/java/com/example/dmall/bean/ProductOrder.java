@@ -1,6 +1,9 @@
 package com.example.dmall.bean;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ProductOrder {
     private Integer id;
@@ -14,8 +17,11 @@ public class ProductOrder {
     private  Timestamp payDate;
     private Timestamp deliveryDate;
     private Timestamp confirmDate;
-    private Boolean status;
+    private Integer status;
     private Integer userId;
+
+    @TableField(exist = false)
+    private List<Integer> items;
 
     public Integer getId() {
         return id;
@@ -105,11 +111,11 @@ public class ProductOrder {
         this.confirmDate = confirmDate;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -119,6 +125,14 @@ public class ProductOrder {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public List<Integer> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Integer> items) {
+        this.items = items;
     }
 
     @Override
@@ -137,6 +151,7 @@ public class ProductOrder {
                 ", confirmDate=" + confirmDate +
                 ", status=" + status +
                 ", userId=" + userId +
+                ", items=" + items +
                 '}';
     }
 }

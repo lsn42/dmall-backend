@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dmall.mapper.ProductOrderItemMapper">
+    <select id="selectOrderItemByUserId" resultType="ProductOrderItem">
+        select * from product_order_item where user_id =#{id}
+    </select>
+
+    <select id="selectOrderItemById" resultType="ProductOrderItem">
+        select * from product_order_item where id=#{id}
+    </select>
+    <select id="selectItemInCart" resultType="ProductOrderItem">
+        select * from product_order_item where order_id =null and user_id =#{id}
+    </select>
+
+    <select id="selectItemByOrderId" resultType="ProductOrderItem">
+        select * from product_order_item where order_id =#{id}
+    </select>
+
+    <select id="selectProductByItem" resultType="Product">
+        select product.* from product_order_item Inner join product
+                                on product.id = product_order_item.product_id
+        where id=#{id}
+    </select>
+
+    <insert id="insertIntoOrderItem" parameterType="ProductOrderItem" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert product_order_item(count,price,product_id,order_id,user_id,message)
+           values(#{count},#{price},#{productId},#{orderId},#{userId},#{message})
+    </insert>
+
+    <delete id="deleteOrderItem" parameterType="Integer">
+        delete from product_order_item where id=#{id}
+    </delete>
+
+    <update id="updateOrderItem">
+        update product_order_item set id=#{id},count=#{count},price=#{price},
+                    product_id=#{productId},order_id=#{orderId},user_id=#{userId},message=#{message}
+        where id=#{id}
+    </update>
+
+    <update id="addOrderIdForItem" >
+        update product_order_item set order_id=#{orderId} where id=#{id}
+    </update>
+
+    <insert id="addReviewForItem" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert review(content,create_date,user_id,product_id,order_item_id) values(#{content},#{createDate},#{userId},#{productId},#{orderItemId})
+    </insert>
+
+    <insert id="newOrder" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert product_order(code,address,detail_address,post,receiver,phone,create_date,pay_date,delivery_date,confirm_date,status,user_id)
+                values(#{code},#{address},#{detailAddress},#{post},#{receiver},#{phone},#{createDate},#{payDate},#{deliveryDate},#{status},#{userId})
+    </insert>
+
+    <update id="changeCount" >
+        update product_order_item set count=#{count} where id=#{id}
+    </update>
+
+    <update id="addMessage">
+        update product_order_item set message=#{message} where id=#{id}
+    </update>
+</mapper>

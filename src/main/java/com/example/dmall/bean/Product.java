@@ -18,6 +18,10 @@ public class Product {
     private Integer del;
     @TableField(exist=false)  //使用注解排除和数据库中表不对应的字段，该字段的主要功能是因为在查询产品信息的时候，还希望查询出产品的图片，而产品的图片存放在另外的表中，所以，为了方便在这里定义该字段。
     private String smallimage;
+    @TableField(exist = false)
+    private Integer reviewCount;
+    @TableField(exist = false)
+    private Integer buyCount;
     public Integer getId() {
         return id;
     }
@@ -114,6 +118,22 @@ public class Product {
         this.smallimage = smallimage;
     }
 
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+
+    public Integer getBuyCount() {
+        return buyCount;
+    }
+
+    public void setBuyCount(Integer buyCount) {
+        this.buyCount = buyCount;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -128,6 +148,9 @@ public class Product {
                 ", isEnabled=" + isEnabled +
                 ", score=" + score +
                 ", del=" + del +
+                ", smallimage='" + smallimage + '\'' +
+                ", reviewCount=" + reviewCount +
+                ", buyCount=" + buyCount +
                 '}';
     }
 }

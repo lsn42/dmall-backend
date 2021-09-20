@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dmall.mapper.OrderMapper">
+    <update id="pay" >
+        update product_order set pay_date=#{date},status=1 where id=#{id}
+    </update>
+
+    <update id="deliver">
+        update product_order set delivery_date=#{date},status=2 where id=#{id}
+    </update>
+
+    <update id="confirm">
+        update product_order set confirm_date=#{date},status=3 where id=#{id}
+    </update>
+
+    <select id="allOrder" resultType="ProductOrder">
+        select * from product_order where user_id=#{id}
+    </select>
+
+    <select id="unpaidOrder" resultType="ProductOrder">
+        select * from product_order where user_id=#{id}and status=0
+    </select>
+
+    <select id="deliveringOrder" resultType="ProductOrder">
+        select * from product_order where user_id=#{id}and status=1
+    </select>
+
+    <select id="unconfirmedOrder" resultType="ProductOrder">
+        select * from product_order where user_id=#{id}and status=2
+    </select>
+
+    <select id="confirmedOrder" resultType="ProductOrder">
+        select * from product_order where user_id=#{id}and status=3
+    </select>
+</mapper>

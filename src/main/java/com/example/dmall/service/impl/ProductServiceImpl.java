@@ -1,8 +1,6 @@
 package com.example.dmall.service.impl;
 
-import com.example.dmall.bean.FirstLevelCategory;
-import com.example.dmall.bean.Product;
-import com.example.dmall.bean.ProductImage;
+import com.example.dmall.bean.*;
 import com.example.dmall.mapper.ProductCategoryMapper;
 import com.example.dmall.mapper.ProductMapper;
 import com.example.dmall.service.ProductService;
@@ -46,4 +44,36 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllByThirdLevelCategory(Integer category_id) {
         return productMapper.findAllByThirdLevelCategory(category_id);
     };
+
+    @Override
+    public Product getProductById(Integer id) {
+        return productMapper.getProductById(id);
+    }
+
+    @Override
+    public Integer getReviewCount(Integer id) {
+        return productMapper.getReviewCount(id);
+    }
+
+    @Override
+    public Integer getBuyCount(Integer id) {
+        return productMapper.getBuyCount(id);
+    }
+
+    @Override
+    public List<PropertyValue> getPropertyValue(Integer id) {
+        return productMapper.getPropertyValue(id);
+    }
+
+    @Override
+    public Property getProperty(Integer id) {
+        return productMapper.getProperty(id);
+    }
+
+    @Override
+    public List<Product> getProductByParam(String param) {
+        return productMapper.getProductByParam(param);
+    }
+
+
 }

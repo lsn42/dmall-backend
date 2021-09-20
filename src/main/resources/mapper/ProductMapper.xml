@@ -28,4 +28,35 @@
                                                 on product.category_id=third_level_category.id
         where third_level_category.id=#{category_id} order by create_date
     </select>
+
+    <select id="getProductById" resultType="Product">
+        select * from Product where id=#{id}
+    </select>
+
+    <select id="getReviewCount" resultType="Integer">
+        select count(*) from review where product_id=#{id}
+    </select>
+
+    <select id="getBuyCount" resultType="Integer">
+        select count(*) from product_order_item where order_id !=null and product_id=#{id}
+    </select>
+
+    <select id="getReviews" resultType="Integer">
+        select * from review where product_id=#{id}
+    </select>
+    
+    <select id="getPropertyValue" resultType="PropertyValue">
+        select * from property_value where product_id =#{id}
+    </select>
+
+    <select id="getProperty" resultType="Property">
+        select * from property
+        where id=#{id}
+    </select>
+
+    <select id="getProductByParam" resultType="Product">
+        select * from product where locate(#{param},name)>0
+    </select>
+
+
 </mapper>

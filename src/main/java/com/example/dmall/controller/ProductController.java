@@ -1,9 +1,6 @@
 package com.example.dmall.controller;
 
-import com.example.dmall.bean.FirstLevelCategory;
-import com.example.dmall.bean.Msg;
-import com.example.dmall.bean.Product;
-import com.example.dmall.bean.ProductImage;
+import com.example.dmall.bean.*;
 import com.example.dmall.service.ProductService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -100,7 +97,10 @@ public class ProductController {
         for(Product product:products) {
             List<ProductImage> productImages = productService.findProductSmallImage(product.getId());
             if(productImages.size()>0){
-                product.setSmallimage(productImages.get(0).getSrc());}
+                product.setSmallimage(productImages.get(0).getSrc());
+            }
+            product.setBuyCount(productService.getBuyCount(product.getId()));
+            product.setReviewCount(productService.getReviewCount(product.getId()));
         }
         //使用PageInfo来包装查询结果，只需将PageInfo传到前台即可,传入查询的结果和连续显示的页数
         PageInfo page = new PageInfo(products,pageSize);
@@ -124,6 +124,8 @@ public class ProductController {
             List<ProductImage> productImages = productService.findProductSmallImage(product.getId());
             if(productImages.size()>0){
                 product.setSmallimage(productImages.get(0).getSrc());}
+            product.setBuyCount(productService.getBuyCount(product.getId()));
+            product.setReviewCount(productService.getReviewCount(product.getId()));
         }
         //使用PageInfo来包装查询结果，只需将PageInfo传到前台即可,传入查询的结果和连续显示的页数
         PageInfo page = new PageInfo(products,pageSize);
@@ -139,5 +141,73 @@ public class ProductController {
 //        }
 
         return new Msg().success("images",productImages);
+    }
+
+    @RequestMapping("/getProductById/{id}")
+    public Msg getProductById(@PathVariable(value = "id") Integer id) {
+        Msg msg = new Msg();
+        Product product = productService.getProductById(id);
+        if(product==null) {
+            return Msg.fail();
+        } else{
+            msg.success("product",product);
+            msg.success("images",productService.findProductSmallImage(product.getId()));
+            msg.success("reviewCount",productService.getReviewCount(product.getId()));
+            msg.success("buyCount",productService.getBuyCount(id));
+        }
+        return msg;
+    }
+
+    @RequestMapping("/detail/{id}")
+    public Msg productDetails(@PathVariable(value = "id")Integer id) {
+        Msg msg = new Msg();
+        Product product = productService.getProductById(id);
+        if(product==null) {
+            return Msg.fail();
+        } else{
+            msg.success("product",product);
+            msg.success("images",productService.findProductSmallImage(product.getId()));
+            msg.success("reviewCount",productService.getReviewCount(product.getId()));
+            msg.success("buyCount",productService.getBuyCount(id));
+            List<Map<String,Object>> list = new ArrayList<>();
+            List<PropertyValue> propertyValues = productService.getPropertyValue(id);
+            if(propertyValues==null) {
+                propertyValues = new ArrayList<>();
+            }
+            for(PropertyValue propertyValue:propertyValues) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("value",propertyValue.getValue());
+                map.put("key",productService.getProperty(propertyValue.getPropertyId()).getName());
+                list.add(map);
+            }
+            msg.success("properties",list);
+        }
+        return msg;
+    }
+
+    @RequestMapping("/search")
+    public Msg findByParam(@RequestParam(value= "pn",defaultValue = "1") Integer pn,
+                                      @RequestParam(value = "param",required = true) String param,
+                                      @RequestParam(value = "ps",defaultValue = "20")Integer ps){
+        int pageSize = ps;
+        //在查询之前调用startPage方法，传入pn,pageSize
+        PageHelper.startPage(pn,pageSize);
+        //在startPage方法后紧跟一个查询，此查询是一个分页查询
+        List<Product> products = productService.getProductByParam(param);
+        if(products==null){
+            products=new ArrayList<Product>();
+        }
+        for(Product product:products) {
+            List<ProductImage> productImages = productService.findProductSmallImage(product.getId());
+            if(productImages.size()>0){
+                product.setSmallimage(productImages.get(0).getSrc());
+            }
+            product.setBuyCount(productService.getBuyCount(product.getId()));
+            product.setReviewCount(productService.getReviewCount(product.getId()));
+        }
+        //使用PageInfo来包装查询结果，只需将PageInfo传到前台即可,传入查询的结果和连续显示的页数
+        PageInfo page = new PageInfo(products,pageSize);
+
+        return Msg.success().success("pageInfo", page);
     }
 }

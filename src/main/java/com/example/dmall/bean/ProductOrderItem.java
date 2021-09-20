@@ -1,5 +1,7 @@
 package com.example.dmall.bean;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.math.BigDecimal;
 
 public class ProductOrderItem {
@@ -10,6 +12,16 @@ public class ProductOrderItem {
     private Integer orderId;
     private Integer userId;
     private String message;
+    @TableField(exist = false)
+    private String imgSrc;
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
 
     public Integer getId() {
         return id;

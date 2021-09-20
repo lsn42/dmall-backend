@@ -19,7 +19,7 @@ public class AdminController {
     public AdminController(AdminService adminService){this.adminService =adminService;}
 
 
-    @RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/dologin",method = {RequestMethod.GET,RequestMethod.POST})
     public Msg login(@RequestParam(value="name") String name,
                        @RequestParam(value = "password") String password) {
         Admin admin = new Admin();
