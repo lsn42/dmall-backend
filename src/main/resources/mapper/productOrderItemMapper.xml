@@ -59,4 +59,8 @@
     <update id="addMessage">
         update product_order_item set message=#{message} where id=#{id}
     </update>
+
+    <select id="getReviewByItemId" resultType="Review">
+        select * from review where order_item_id=#{itemId} and user_id=#{userId}
+    </select>
 </mapper>

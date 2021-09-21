@@ -21,4 +21,5 @@ public interface ProductOrderItemService {
     Integer addIntoOrder(ProductOrder order) throws Exception;
     Integer changeCount(Integer count,Integer id);
     Integer addMessage(String message,Integer id);
+    Review getReview(Integer itemId,Integer userId);
 }

@@ -7,5 +7,22 @@
         select * from address where region_id = #{xxx}
     </select>
 
+    <select id="firstAddress" resultType="Address">
+        select * from address where region_id=area_id
+    </select>
+    <select id="getUserAddress">
+        select * user_address where user_id=#{id}
+    </select>
 
+    <insert id="addUserAddress" >
+        insert user_address(user_id,area_id,detail_address) values (#{userId},#{areaId},#{detailAddress})
+    </insert>
+
+    <update id="updateAddress">
+        update user_address set detail_address=#{detailAddress} where user_id=#{userId} and area_id=#{areaId}
+    </update>
+
+    <delete id="deleteAddress">
+        delete user_address where user_id=#{userId} and area_id=#{areaId}
+    </delete>
 </mapper>

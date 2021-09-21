@@ -89,4 +89,9 @@ public class ProductOrderItemServiceImpl implements ProductOrderItemService {
         return productOrderItemMapper.addMessage(message,id);
     }
 
+    @Override
+    public Review getReview(Integer itemId, Integer userId) {
+        return productOrderItemMapper.getReviewByItemId(itemId,userId);
+    }
+
 }

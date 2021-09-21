@@ -41,7 +41,7 @@
         select count(*) from product_order_item where order_id !=null and product_id=#{id}
     </select>
 
-    <select id="getReviews" resultType="Integer">
+    <select id="getReviewsByProduct" resultType="Review">
         select * from review where product_id=#{id}
     </select>
     

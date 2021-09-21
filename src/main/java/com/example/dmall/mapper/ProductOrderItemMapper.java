@@ -21,4 +21,5 @@ public interface ProductOrderItemMapper {
     Integer newOrder(ProductOrder order);
     Integer changeCount(Integer count,Integer id);
     Integer addMessage(String message,Integer id);
+    Review getReviewByItemId(Integer itemId,Integer userId);
 }

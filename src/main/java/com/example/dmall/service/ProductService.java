@@ -17,4 +17,5 @@ public interface ProductService {
     List<PropertyValue> getPropertyValue(Integer id);
     Property getProperty(Integer id);
     List<Product> getProductByParam(String param);
+    List<Review> getReviewsByProduct(Integer id);
 }

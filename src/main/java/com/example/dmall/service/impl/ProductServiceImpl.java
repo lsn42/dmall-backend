@@ -75,5 +75,10 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.getProductByParam(param);
     }
 
+    @Override
+    public List<Review> getReviewsByProduct(Integer id) {
+        return productMapper.getReviewsByProduct(id);
+    }
+
 
 }

@@ -127,6 +127,15 @@ public class ProductOrderItemController {
         if(res<0) return Msg.fail();
         return Msg.success();
     }
+
+    @RequestMapping("/getReview/{id}")
+    @CheckToken
+    public Msg getReview(@RequestHeader(value = "token") String token,
+                         @PathVariable(value = "id")Integer itemId){
+        Integer userId = JwtUtil.getUserId(token);
+        return new Msg().success("review",productOrderItemService.getReview(itemId,userId));
+    }
+
     public static String executes() {
         String prefix = "DN";
         SimpleDateFormat format = new SimpleDateFormat("yyMMddHHmmss");

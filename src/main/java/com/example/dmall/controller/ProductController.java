@@ -185,6 +185,12 @@ public class ProductController {
         return msg;
     }
 
+    @RequestMapping("/getReviews/{id}")
+    public Msg getReviews(@PathVariable(value = "id")Integer id) {
+        List<Review> reviews = productService.getReviewsByProduct(id);
+        return new Msg().success("reviews",reviews);
+    }
+
     @RequestMapping("/search")
     public Msg findByParam(@RequestParam(value= "pn",defaultValue = "1") Integer pn,
                                       @RequestParam(value = "param",required = true) String param,

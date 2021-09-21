@@ -1,9 +1,6 @@
 package com.example.dmall.mapper;
 
-import com.example.dmall.bean.Product;
-import com.example.dmall.bean.ProductImage;
-import com.example.dmall.bean.Property;
-import com.example.dmall.bean.PropertyValue;
+import com.example.dmall.bean.*;
 
 import java.util.List;
 
@@ -21,4 +18,5 @@ public interface ProductMapper{
     List<PropertyValue> getPropertyValue(Integer id);
     Property getProperty(Integer id);
     List<Product> getProductByParam(String param);
+    List<Review> getReviewsByProduct(Integer id);
 }
