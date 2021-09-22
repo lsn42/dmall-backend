@@ -77,15 +77,14 @@ public class ProductOrderItemController {
 
     }
 
-    @RequestMapping(value = "/changeCount/{count}/{id}")
+    @RequestMapping(value = "/changeCount")
     @CheckToken
-    public Msg changeCount(@PathVariable(value="count") Integer count,
-                            @PathVariable(value="id") Integer id,
+    public Msg changeCount(@RequestBody ProductOrderItem productOrderItem,
                            @RequestHeader(value="token") String token){
         Integer userId = JwtUtil.getUserId(token);
-        ProductOrderItem item = productOrderItemService.selectOrderItemById(id);
+        ProductOrderItem item = productOrderItemService.selectOrderItemById(productOrderItem.getId());
         if(item.getUserId().equals(userId)){
-            if(productOrderItemService.changeCount(count,id)>0){
+            if(productOrderItemService.changeCount(productOrderItem.getPrice(),productOrderItem.getCount(),productOrderItem.getId())>0){
                 return  Msg.success();
             }else return Msg.error("访问数据库失败，请稍后重试");
         }return Msg.error("购物车中没有该物品");
@@ -112,7 +111,9 @@ public class ProductOrderItemController {
     @CheckToken
     public Msg addItem(@RequestBody ProductOrderItem productOrderItem,
                        @RequestHeader(value = "token") String token) {
-        Integer id = productOrderItemService.insertintoOrderItem(productOrderItem);
+        Integer userId= JwtUtil.getUserId(token);
+        productOrderItem.setUserId(userId);
+        Integer id = productOrderItemService.insertIntoOrderItem(productOrderItem);
         if(id<0){
             return Msg.fail();
         }return new Msg().success("id",id);

@@ -11,7 +11,7 @@
         select * from product_order_item where id=#{id}
     </select>
     <select id="selectItemInCart" resultType="ProductOrderItem">
-        select * from product_order_item where order_id =null and user_id =#{id}
+        select * from product_order_item where order_id is null and user_id =#{id}
     </select>
 
     <select id="selectItemByOrderId" resultType="ProductOrderItem">
@@ -24,7 +24,7 @@
         where id=#{id}
     </select>
 
-    <insert id="insertIntoOrderItem" parameterType="ProductOrderItem" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="insertIntoOrderItem" parameterType="ProductOrderItem" useGeneratedKeys="true"  keyProperty="id">
         insert product_order_item(count,price,product_id,order_id,user_id,message)
            values(#{count},#{price},#{productId},#{orderId},#{userId},#{message})
     </insert>
@@ -43,17 +43,17 @@
         update product_order_item set order_id=#{orderId} where id=#{id}
     </update>
 
-    <insert id="addReviewForItem" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="addReviewForItem" useGeneratedKeys="true" keyProperty="id">
         insert review(content,create_date,user_id,product_id,order_item_id) values(#{content},#{createDate},#{userId},#{productId},#{orderItemId})
     </insert>
 
-    <insert id="newOrder" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="newOrder" useGeneratedKeys="true" keyProperty="id">
         insert product_order(code,address,detail_address,post,receiver,phone,create_date,pay_date,delivery_date,confirm_date,status,user_id)
-                values(#{code},#{address},#{detailAddress},#{post},#{receiver},#{phone},#{createDate},#{payDate},#{deliveryDate},#{status},#{userId})
+                values(#{code},#{address},#{detailAddress},#{post},#{receiver},#{phone},#{createDate},#{payDate},#{deliveryDate},#{confirmDate},#{status},#{userId})
     </insert>
 
     <update id="changeCount" >
-        update product_order_item set count=#{count} where id=#{id}
+        update product_order_item set price=#{price},count=#{count} where id=#{id};
     </update>
 
     <update id="addMessage">

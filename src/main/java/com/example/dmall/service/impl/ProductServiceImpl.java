@@ -52,12 +52,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer getReviewCount(Integer id) {
-        return productMapper.getReviewCount(id);
+        Integer res = productMapper.getReviewCount(id);
+        if(res==null)return  0;
+        return res;
     }
 
     @Override
     public Integer getBuyCount(Integer id) {
-        return productMapper.getBuyCount(id);
+        Integer res = productMapper.getBuyCount(id);
+        if(res==null)
+        return 0;
+        return res;
     }
 
     @Override
